@@ -1,0 +1,4 @@
+description: Red Hat Helm Chart for Django webapps with or without PostgreSQL DB
+name: python-django
+tags: python,django,postgresql
+version: v0.0.1

@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    description: Defines how to deploy the application server
+    image.openshift.io/triggers: >-
+      [
+        {
+          "from": {
+            "kind":"ImageStreamTag",
+            "name":"{{ .Values.name }}:latest"
+          },
+          "fieldPath":"spec.template.spec.containers[0].image"
+        }
+      ]
+  labels:
+    app: django-app
+  name: {{ .Values.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: {{ .Values.name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.name }}
+      name: {{ .Values.name }}
+    spec:
+      containers:
+      - env:
+        {{- if .Values.db.enabled }}
+        - name: POSTGRESQL_HOST
+          value: {{ if .Values.db.deploy_new }}{{ .Values.db.service_name }}{{ else }}{{ .Values.db.host }}{{ end }}
+        - name: POSTGRESQL_DATABASE
+          value: {{ .Values.db.name }}
+        - name: POSTGRESQL_USER
+          valueFrom:
+            secretKeyRef:
+              key: database-user
+              name: {{ .Values.name }}
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-password
+              name: {{ .Values.name }}
+        {{- end }}
+        - name: DJANGO_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              key: django-secret-key
+              name: {{ .Values.name }}
+        image: ' '
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.target_port }}
+          initialDelaySeconds: 30
+          timeoutSeconds: 3
+        name: {{ .Values.name }}
+        ports:
+        - containerPort: {{ .Values.target_port }}
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.target_port }}
+          initialDelaySeconds: 3
+          timeoutSeconds: 3
+        resources:
+          limits:
+            memory: {{ .Values.memory_limit }}

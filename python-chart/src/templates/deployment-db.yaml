@@ -1,0 +1,75 @@
+{{ if and .Values.db.enabled .Values.db.deploy_new }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    description: Defines how to deploy the database
+    image.openshift.io/triggers: >-
+      [
+        {
+          "from": {
+            "kind":"ImageStreamTag",
+            "name":"postgresql:{{ .Values.postgresql_version }}",
+            "namespace": "{{ .Values.namespace }}"
+          },
+          "fieldPath": "spec.template.spec.containers[0].image"
+        }
+      ]
+  labels:
+    app: django-app
+  name: {{ .Values.db.service_name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: {{ .Values.db.service_name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.db.service_name }}
+      name: {{ .Values.db.service_name }}
+    spec:
+      containers:
+      - env:
+        - name: POSTGRESQL_USER
+          valueFrom:
+            secretKeyRef:
+              key: database-user
+              name: {{ .Values.name }}
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-password
+              name: {{ .Values.name }}
+        - name: POSTGRESQL_DATABASE
+          value: {{ .Values.db.name }}
+        image: ' '
+        livenessProbe:
+          exec:
+            command:
+            - /usr/libexec/check-container
+            - --live
+          initialDelaySeconds: 120
+          timeoutSeconds: 10
+        name: postgresql
+        ports:
+        - containerPort: 5432
+        readinessProbe:
+          exec:
+            command:
+            - /usr/libexec/check-container
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+        resources:
+          limits:
+            memory: {{ .Values.db.memory_limit }}
+        volumeMounts:
+        - mountPath: /var/lib/pgsql/data
+          name: {{ .Values.db.service_name }}-data
+      volumes:
+      - name: {{ .Values.db.service_name }}-data
+        persistentVolumeClaim:
+          claimName: {{ .Values.db.service_name }}
+{{ end }}

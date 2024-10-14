@@ -1,0 +1,39 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    description: Defines how to build the application
+  labels:
+    app: django-app
+  name: {{ .Values.name }}
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: {{ .Values.name }}:latest
+  source:
+    contextDir: {{ .Values.context_dir }}
+    git:
+      uri: {{ .Values.source_repository_url }}
+      {{- if .Values.source_repository_ref }}
+      ref: {{ .Values.source_repository_ref }}
+      {{ end }}
+    type: Git
+  strategy:
+    sourceStrategy:
+      env:
+      - name: PIP_INDEX_URL
+        value: {{ .Values.pip_index_url }}
+      - name: APP_FILE
+        value: {{ .Values.app_file }}
+      from:
+        kind: ImageStreamTag
+        name: python:{{ .Values.python_version }}
+        namespace: {{ .Values.namespace }}
+    type: Source
+  triggers:
+  - type: ImageChange
+  - type: ConfigChange
+  - type: GitHub
+    github:
+      secret: {{ .Values.github_webhook_secret }}

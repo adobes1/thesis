@@ -1,0 +1,31 @@
+app_file: ''
+app_config: ''
+application_domain: ''
+context_dir: '.'
+create_output_imagestream: true
+
+db:
+  enabled: false
+  deploy_new: false
+  name: db
+  password: password
+  host: ''
+  service_name: postgresql
+  user: user
+  memory_limit: 521Mi
+  volume_capacity: 1Gi
+  postgresql_version: 'latest'
+
+django_secret_key: ''
+github_webhook_secret: 'fake-gh-secret'
+memory_limit: 512Mi
+name: django-app
+namespace: openshift # Namespace where python and postgresql imagestreams reside
+pip_index_url: ''
+postgresql_version: latest
+python_version: 'latest'
+source_repository_ref: ''
+source_repository_url: ''
+run_test_cmd: './manage.py test'
+port: 8080 # Port which is exposed by the webapp service
+target_port: 8080 # Port of webapp (pod) to which to forward connections

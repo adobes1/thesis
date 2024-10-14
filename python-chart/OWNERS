@@ -1,0 +1,9 @@
+chart:
+  name: python-django
+  description: Red Hat Helm Chart for Django webapps with or without PostgreSQL DB
+publicPgpKey: null
+users:
+  - githubUsername: adobes1
+vendor:
+  label: redhat
+  name: Red Hat

@@ -1,0 +1,17 @@
+{{ if and .Values.db.enabled .Values.db.deploy_new }}
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    description: Exposes the database server
+  labels:
+    app: django-app
+  name: {{ .Values.db.service_name }}
+spec:
+  ports:
+  - name: postgresql
+    port: 5432
+    targetPort: 5432
+  selector:
+    name: {{ .Values.db.service_name }}
+{{ end }}

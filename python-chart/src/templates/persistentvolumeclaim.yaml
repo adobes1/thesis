@@ -1,0 +1,14 @@
+{{ if and .Values.db.enabled .Values.db.deploy_new }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: django-app
+  name: {{ .Values.db.service_name }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.db.volume_capacity }}
+{{ end }}
