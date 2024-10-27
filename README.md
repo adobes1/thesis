@@ -75,7 +75,8 @@ $ helm install <release-name> <tarball-path> --set name=db.enabled=true,name=my-
 Both of these approaches can be combined in which case values set with `--set` will override those in your custom values yaml.
 
 ### Running Helm Tests
-After you have deployed the chart, it is possible to run the tests included in the chart itself
+After you have deployed the chart, it is possible to run the tests included in the chart itself.
+
 Helm offers a built-in testing feature that can validate the deployment once the resources are live. To run tests:
 ```
 helm test <release-name>
@@ -88,12 +89,12 @@ $ helm uninstall <release-name>
 ```
 
 ## Chart Values
-Here's a Markdown table explaining each field in `values.yaml` file along with their default values:
+Here's a table explaining each field in `values.yaml` file along with their default values:
 
 | Parameter                     | Description                                                                                                    | Default Value         |
 |-------------------------------|----------------------------------------------------------------------------------------------------------------|-----------------------|
 | **app_file**                  | Path to your Python script. Leave empty if you want to use this chart with a Django application                | `''`                  |
-| **app_config**                | Path to an additional valid Gunicorn application file (if your project uses Gunicorn)                          | `''`                  |
+| **app_config**                | Path to a Python file with valid Gunicorn configuration (if your project uses Gunicorn)                        | `''`                  |
 | **application_domain**        | Domain name for the Django application. If not set, uses default cluster domain settings                       | `''`                  |
 | **context_dir**               | Directory within the repository to use as the application context (should contain `manage.py` for Django apps) | `.`                   |
 | **create_output_imagestream** | Specifies whether to create an ImageStream in your cluster where the application image will be pushed to       | `true`                |
@@ -110,7 +111,7 @@ Here's a Markdown table explaining each field in `values.yaml` file along with t
 | **django_secret_key**         | Secret key for Django applications                                                                             | `''`                  |
 | **github_webhook_secret**     | Secret for GitHub webhooks for triggering builds                                                               | `fake-gh-secret`      |
 | **memory_limit**              | Memory limit for the application container                                                                     | `512Mi`               |
-| **name**                      | Name of the application (also used for various resources like BuildConfig and app deployment)                  | `django-app`          |
+| **name**                      | Name of the application (also used for various resources like BuildConfig and app Deployment)                  | `django-app`          |
 | **namespace**                 | Namespace where Python and Postgresql imagestreams reside                                                      | `openshift`           |
 | **pip_index_url**             | URL of custom PyPi repository index                                                                            | `''`                  |
 | **postgresql_version**        | PostgreSQL version used when deploying a new database                                                          | `'15-el9'`            |
