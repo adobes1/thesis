@@ -3,6 +3,7 @@ app_config: ''
 application_domain: ''
 context_dir: '.'
 create_output_imagestream: true
+app_imagestream: ''
 
 db:
   enabled: false
@@ -14,7 +15,6 @@ db:
   user: user
   memory_limit: 521Mi
   volume_capacity: 1Gi
-  postgresql_version: 'latest'
 
 django_secret_key: ''
 github_webhook_secret: 'fake-gh-secret'

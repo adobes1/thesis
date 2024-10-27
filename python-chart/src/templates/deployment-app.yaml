@@ -8,7 +8,7 @@ metadata:
         {
           "from": {
             "kind":"ImageStreamTag",
-            "name":"{{ .Values.name }}:latest"
+            "name":"{{ if .Values.create_output_imagestream }}{{ .Values.name }}{{ else }}{{ .Values.app_imagestream }}{{ end }}:latest"
           },
           "fieldPath":"spec.template.spec.containers[0].image"
         }

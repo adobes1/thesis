@@ -10,7 +10,7 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: {{ .Values.name }}:latest
+      name: {{ if .Values.create_output_imagestream }}{{ .Values.name }}{{ else }}{{ .Values.app_imagestream }}{{ end }}:latest
   source:
     contextDir: {{ .Values.context_dir }}
     git:
