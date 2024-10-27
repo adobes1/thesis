@@ -22,8 +22,8 @@ memory_limit: 512Mi
 name: django-app
 namespace: openshift # Namespace where python and postgresql imagestreams reside
 pip_index_url: ''
-postgresql_version: latest
-python_version: 'latest'
+postgresql_version: '15-el9'
+python_version: '3.9-ubi9'
 source_repository_ref: ''
 source_repository_url: ''
 run_test_cmd: './manage.py test'
