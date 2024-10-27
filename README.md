@@ -48,7 +48,7 @@ Before trying to install the Helm chart make sure you have the following prerequ
 ### Package the Helm Chart
 To package the Helm chart run the following:
 ```
-$ helm package python-chart
+$ helm package python-chart/src
 ```
 This will package the `python-chart` into a tarball (ending in `.tgz`)
 
