@@ -1,2 +1,4 @@
-django
-psycopg2
+asgiref==3.8.1
+django==5.1.4
+psycopg2==2.9.10
+sqlparse==0.5.3
