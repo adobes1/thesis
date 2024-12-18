@@ -1,0 +1,10 @@
+context_dir: 'django-apps/libraryproject'
+name: django-library
+db:
+  enabled: true
+  deploy_new: true
+namespace: openshift
+python_version: 'latest'
+source_repository_url: https://github.com/adobes1/thesis.git
+run_test_cmd: './manage.py test'
+create_output_imagestream: true
