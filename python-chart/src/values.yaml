@@ -1,5 +1,4 @@
 app_file: ''
-app_config: ''
 application_domain: ''
 context_dir: '.'
 create_output_imagestream: true

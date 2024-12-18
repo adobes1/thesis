@@ -94,7 +94,6 @@ Here's a table explaining each field in `values.yaml` file along with their defa
 | Parameter                     | Description                                                                                                    | Default Value         |
 |-------------------------------|----------------------------------------------------------------------------------------------------------------|-----------------------|
 | **app_file**                  | Path to your Python script. Leave empty if you want to use this chart with a Django application                | `''`                  |
-| **app_config**                | Path to a Python file with valid Gunicorn configuration (if your project uses Gunicorn)                        | `''`                  |
 | **application_domain**        | Domain name for the Django application. If not set, uses default cluster domain settings                       | `''`                  |
 | **context_dir**               | Directory within the repository to use as the application context (should contain `manage.py` for Django apps) | `.`                   |
 | **create_output_imagestream** | Specifies whether to create an ImageStream in your cluster where the application image will be pushed to       | `true`                |
