@@ -2,6 +2,7 @@ app_file: ''
 application_domain: ''
 context_dir: '.'
 create_output_imagestream: true
+create_route: true
 app_imagestream: ''
 
 db:
@@ -25,6 +26,7 @@ postgresql_version: '15-el9'
 python_version: '3.9-ubi9'
 source_repository_ref: ''
 source_repository_url: ''
+replicas: 1
 run_test_cmd: './manage.py test'
 port: 8080 # Port which is exposed by the webapp service
 target_port: 8080 # Port of webapp (pod) to which to forward connections

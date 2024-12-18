@@ -97,6 +97,7 @@ Here's a table explaining each field in `values.yaml` file along with their defa
 | **application_domain**        | Domain name for the Django application. If not set, uses default cluster domain settings                       | `''`                  |
 | **context_dir**               | Directory within the repository to use as the application context (should contain `manage.py` for Django apps) | `.`                   |
 | **create_output_imagestream** | Specifies whether to create an ImageStream in your cluster where the application image will be pushed to       | `true`                |
+| **create_route**              | Specifies whether to create a Route which will expose your application outside the cluster                     | `true`                |
 | **app_imagestream**           | Name of the ImageStream to push your application image to if `create_output_imagestream` is `false`            | `''`                  |
 | **db.enabled**                | Enables database support for the application                                                                   | `false`               |
 | **db.deploy_new**             | Deploys a new database instance if set to `true`; otherwise, connects to an existing one                       | `false`               |
@@ -117,6 +118,7 @@ Here's a table explaining each field in `values.yaml` file along with their defa
 | **python_version**            | Python version to use for the application                                                                      | `3.9-ubi9`            |
 | **source_repository_ref**     | Branch, tag, or commit to use from the source repository                                                       | `''`                  |
 | **source_repository_url**     | URL of the application's source repository                                                                     | `''`                  |
+| **replicas**                  | How many replicas of your application should be deployed to the cluster                                        | `1`                |
 | **port**                      | Port exposed by the application's service                                                                      | `8080`                |
 | **target_port**               | Internal port within the application container to forward traffic to (the app listens on this port)            | `8080`                |
 
