@@ -2,18 +2,19 @@
 
 This repository contains a Helm chart for deploying Django web applications on OpenShift 4 cluster. This Chart also makes it possible to deploy a PostgreSQL database which will connect to your web application.
 Aside from Django applications, it can also be used to deploy other Python applications.
-As a demonstration of the capabilities of this Helm Chart, this repo also includes two sample django applcations - static hello world page and a dynamic library app using PostgreSQL.
+As a demonstration of the capabilities of this Helm chart, this repo also includes two sample django applcations - static hello world page and a dynamic library app using PostgreSQL.
 
 ## Repository Structure
 ```
 .
 ├── django-apps
 │   ├── hello-world-django
-│   │   ├── manage.py
 │   │   ├── pages
 │   │   │   ├── ...
 │   │   ├── project
 │   │   │   ├── ...
+│   │   ├── manage.py
+│   │   ├── sample-values.yaml
 │   │   └── requirements.txt
 │   └── libraryproject
 │       ├── library
@@ -21,6 +22,7 @@ As a demonstration of the capabilities of this Helm Chart, this repo also includ
 │       ├── libraryproject
 │       │   ├── ...
 │       ├── manage.py
+│       ├── sample-values.yaml
 │       └── requirements.txt
 ├── python-chart
 |   ├── OWNERS
@@ -43,7 +45,7 @@ Before trying to install the Helm chart make sure you have the following prerequ
 -   You are logged into an OCPv4 cluster
 -   Helm installed
 
-## Working with the Helm Chart
+## Working with the Helm chart
 
 ### Package the Helm Chart
 To package the Helm chart run the following:
@@ -52,7 +54,7 @@ $ helm package python-chart/src
 ```
 This will package the `python-chart` into a tarball (ending in `.tgz`)
 
-### Installing the Helm Chart to cluster
+### Installing the packaged Helm chart to cluster
 To install the Helm chart to your cluster run the following:
 ```
 $ helm install <release-name> <tarball-path>
@@ -74,6 +76,11 @@ $ helm install <release-name> <tarball-path> --set name=db.enabled=true,name=my-
 ```
 Both of these approaches can be combined in which case values set with `--set` will override those in your custom values yaml.
 
+### Installing the Helm chart directly
+It is also possible to install the Helm chart directly without packaging it first.
+
+Use the same command as you would for installing the packaged chart, but instead of specifying the path to the tarball, use `python-chart/src`.
+
 ### Running Helm Tests
 After you have deployed the chart, it is possible to run the tests included in the chart itself.
 
@@ -83,13 +90,13 @@ helm test <release-name>
 ```
 
 ### Uninstall the Helm Chart
-To uninstall the Helm Chart, simply run
+To uninstall the Helm chart, simply run
 ```
 $ helm uninstall <release-name>
 ```
 
 ## Chart Values
-Here's a table explaining each field in `values.yaml` file along with their default values:
+Below is a table explaining each field in `values.yaml` file along with its default values:
 
 | Parameter                     | Description                                                                                                    | Default Value         |
 |-------------------------------|----------------------------------------------------------------------------------------------------------------|-----------------------|
@@ -118,7 +125,6 @@ Here's a table explaining each field in `values.yaml` file along with their defa
 | **python_version**            | Python version to use for the application                                                                      | `3.9-ubi9`            |
 | **source_repository_ref**     | Branch, tag, or commit to use from the source repository                                                       | `''`                  |
 | **source_repository_url**     | URL of the application's source repository                                                                     | `''`                  |
-| **replicas**                  | How many replicas of your application should be deployed to the cluster                                        | `1`                |
+| **replicas**                  | How many replicas of your application should be deployed to the cluster                                        | `1`                   |
 | **port**                      | Port exposed by the application's service                                                                      | `8080`                |
 | **target_port**               | Internal port within the application container to forward traffic to (the app listens on this port)            | `8080`                |
-
