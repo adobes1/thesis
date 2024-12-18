@@ -15,9 +15,10 @@ spec:
       command:
       - /bin/sh
       - -c
-      - |
-        echo "Testing connection to the django app";
-        curl -f {{ .Values.application_domain }} || exit 1;
+      - echo "Testing connection to the app"
+      {{ if and .Values.application_domain .Values.create_route }}
+      - curl -f {{ .Values.application_domain }}
+      {{ end }}
       securityContext:
         allowPrivilegeEscalation: false
         capabilities:
